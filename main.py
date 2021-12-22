@@ -84,12 +84,11 @@ def writePost():
 
         return jsonify(dicResult)
 
-    postID = datetime.date.today().strftime("%y%m%d-%H%M%S")
+    postID = datetime.datetime.now().strftime("%y%m%d-%H%M%S")
 
     doc_ref = db.collection(u"Board").document(postID)
     doc_ref.set({
         u"author": inputPostAuthor,
-        
         u"content": inputPostContent,
         u"title": inputPostTitle
     })
