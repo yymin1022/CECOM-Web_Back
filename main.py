@@ -2,6 +2,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from flask import Flask, jsonify, redirect, request
 
+import datetime
 import firebase_admin
 
 flaskApp = Flask(__name__)
@@ -68,7 +69,6 @@ def writePost():
     errMessage = "RESULT OK"
     inputPostAuthor = ""
     inputPostContent = ""
-    inputPostID = ""
     inputPostTitle = ""
 
     try:
@@ -83,6 +83,8 @@ def writePost():
         dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("", "")]))])
 
         return jsonify(dicResult)
+
+    postID = datetime.date.today().strftime("%y%m%d-%H%M%S")
 
     doc_ref = db.collection(u'Board').document(u'postID')
     doc_ref.set({
