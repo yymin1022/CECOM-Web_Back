@@ -25,7 +25,7 @@ def getPostList():
     for post in posts:
         listPosts.append([post.id, post.to_dict()])
 
-    dictPosts = dict("Result", listPosts)
+    dictPosts = dict(["Result", listPosts])
     return dictPosts
  
 @flaskApp.route("/getPost")
