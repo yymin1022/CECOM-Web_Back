@@ -28,7 +28,7 @@ def getPostList():
     for post in posts:
         dicPosts[post.id] = post.to_dict()
     
-    dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dicPostData)])
+    dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dicPosts)])
 
     return jsonify(dicResult)
  
