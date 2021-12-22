@@ -24,8 +24,12 @@ def getPostList():
 
     for post in posts:
         dicPosts[post.id] = post.to_dict()
+    
+    dicResult = {}
+    dicResult["Result"] = "OK"
+    dicResult["Posts"] = dicPosts
 
-    return dicPosts
+    return dicResult
  
 @flaskApp.route("/getPost")
 def getPost():
