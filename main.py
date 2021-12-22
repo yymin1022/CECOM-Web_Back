@@ -6,7 +6,7 @@ import firebase_admin
 
 flaskApp = Flask(__name__)
 
-cred = credentials.Certificate("/home/server/CECOM-Web_Front/cecom-web-e268a5fa9a73.json")
+cred = credentials.Certificate("/home/server/CECOM-Web_Back/cecom-web-e268a5fa9a73.json")
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
