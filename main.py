@@ -62,7 +62,7 @@ def getPost():
 
     return jsonify(dicResult)
  
-@flaskApp.route("/writePost")
+@flaskApp.route("/writePost", methods = ["POST"])
 def writePost():
     errCode = 0
     errMessage = "RESULT OK"
