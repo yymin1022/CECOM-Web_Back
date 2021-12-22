@@ -4,7 +4,7 @@ flaskApp = Flask(__name__)
  
 @flaskApp.route("/")
 def main():
-    return "Hello, CECOM!"
+    return "Hello, CECOM! API Main Function!"
 
 if __name__ == "__main__":
     flaskApp.run(host="0.0.0.0", port=80)
