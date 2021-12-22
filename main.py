@@ -91,7 +91,7 @@ def writePost():
         u'title': inputPostTitle
     })
     
-    dicResult = dict("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))
+    dicResult = dict(["RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])])
 
     return jsonify(dicResult)
 
