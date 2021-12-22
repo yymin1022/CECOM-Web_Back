@@ -1,6 +1,15 @@
+from firebase_admin import credentials
+from firebase_admin import firestore
 from flask import Flask, jsonify, redirect, request
 
+import firebase_admin
+
 flaskApp = Flask(__name__)
+
+cred = credentials.Certificate("/home/server/CECOM-Web_Front/cecom-web-e268a5fa9a73.json")
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
  
 @flaskApp.route("/")
 def main():
