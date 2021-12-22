@@ -75,7 +75,6 @@ def writePost():
         inputData = request.get_json()
         inputPostAuthor = inputData["postAuthor"]
         inputPostContent = inputData["postContent"]
-        inputPostID = inputData["postID"]
         inputPostTitle = inputData["postTitle"]
     except Exception as errContent:
         errCode = 200
