@@ -23,8 +23,10 @@ def getPostList():
     listPosts = []
 
     for post in posts:
-        listPosts.append(f'{post.id} => {post.to_dict()}')
-    return listPosts[0]
+        listPosts.append(dict([post.id, post.to_dict()]))
+
+    dictPosts = dict("Result", listPosts)
+    return dictPosts
  
 @flaskApp.route("/getPost")
 def getPost():
