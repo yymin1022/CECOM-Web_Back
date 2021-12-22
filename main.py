@@ -10,8 +10,6 @@ cred = credentials.Certificate("/home/server/CECOM-Web_Back/cecom-web-e268a5fa9a
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
-board_ref = db.collection(u'Board')
-posts = board_ref.stream()
  
 @flaskApp.route("/")
 def mainPage():
@@ -19,6 +17,9 @@ def mainPage():
  
 @flaskApp.route("/getPostList")
 def getPostList():
+    board_ref = db.collection(u'Board')
+    posts = board_ref.stream()
+
     dicPosts = {}
 
     for post in posts:
@@ -32,6 +33,9 @@ def getPostList():
  
 @flaskApp.route("/getPost")
 def getPost():
+    board_ref = db.collection(u'Board')
+    posts = board_ref.stream()
+
     postID = "211222-193005"
 
     dicPostData = {}
