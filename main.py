@@ -29,7 +29,7 @@ def getPostList():
     dicResult["Result"] = "OK"
     dicResult["Posts"] = dicPosts
 
-    return dicResult
+    return jsonify(dicResult)
  
 @flaskApp.route("/getPost")
 def getPost():
