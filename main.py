@@ -64,7 +64,37 @@ def getPost():
  
 @flaskApp.route("/writePost")
 def writePost():
-    return "CECOM Web API : Write Post Function"
+    errCode = 0
+    errMessage = "RESULT OK"
+    inputPostAuthor = ""
+    inputPostContent = ""
+    inputPostID = ""
+    inputPostTitle = ""
+
+    try:
+        inputData = request.get_json()
+        inputPostAuthor = inputData["postAuthor"]
+        inputPostContent = inputData["postContent"]
+        inputPostID = inputData["postID"]
+        inputPostTitle = inputData["postTitle"]
+    except Exception as errContent:
+        errCode = 200
+        errMessage = repr(errContent)
+
+        dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("", "")]))])
+
+        return jsonify(dicResult)
+
+    doc_ref = db.collection(u'Board').document(u'postID')
+    doc_ref.set({
+        u'author': inputPostAuthor,
+        u'content': inputPostContent,
+        u'title': inputPostTitle
+    })
+    
+    dicResult = dict("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))
+
+    return jsonify(dicResult)
 
 if __name__ == "__main__":
     flaskApp.run(host="0.0.0.0", port=80)
