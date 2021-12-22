@@ -17,6 +17,9 @@ def mainPage():
  
 @flaskApp.route("/getPostList")
 def getPostList():
+    errCode = 0
+    errMessage = "RESULT OK"
+
     board_ref = db.collection(u'Board')
     posts = board_ref.stream()
 
@@ -25,28 +28,37 @@ def getPostList():
     for post in posts:
         dicPosts[post.id] = post.to_dict()
     
-    dicResult = {}
-    dicResult["Result"] = "OK"
-    dicResult["Posts"] = dicPosts
+    dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dicPostData)])
 
     return jsonify(dicResult)
  
-@flaskApp.route("/getPost")
+@flaskApp.route("/getPost", methods = ["POST"])
 def getPost():
+    errCode = 0
+    errMessage = "RESULT OK"
+    inputPostID = ""
+
+    try:
+        inputData = request.get_json()
+        inputPostID = inputData["postID"]
+    except Exception as errContent:
+        errCode = 200
+        errMessage = repr(errContent)
+
+        dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("", "")]))])
+
+        return jsonify(dicResult)
+
     board_ref = db.collection(u'Board')
     posts = board_ref.stream()
-
-    postID = "211222-193005"
 
     dicPostData = {}
 
     for post in posts:
-        if postID == post.id:
+        if inputPostID == post.id:
             dicPostData = post.to_dict()
     
-    dicResult = {}
-    dicResult["Result"] = "OK"
-    dicResult["PostData"] = dicPostData
+    dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dicPostData)])
 
     return jsonify(dicResult)
  
