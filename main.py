@@ -7,15 +7,15 @@ def main():
     return "Hello, CECOM! API Main Function!"
  
 @flaskApp.route("/getPostList")
-def main():
+def getPostList():
     return "CECOM Web API : Get Post List Function"
  
 @flaskApp.route("/getPost")
-def main():
+def getPost():
     return "CECOM Web API : Get Post Function"
  
 @flaskApp.route("/writePost")
-def main():
+def writePost():
     return "CECOM Web API : Write Post Function"
 
 if __name__ == "__main__":
