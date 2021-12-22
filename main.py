@@ -89,6 +89,7 @@ def writePost():
     doc_ref = db.collection(u"Board").document(postID)
     doc_ref.set({
         u"author": inputPostAuthor,
+        
         u"content": inputPostContent,
         u"title": inputPostTitle
     })
