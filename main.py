@@ -15,7 +15,7 @@ db = firestore.client()
 def mainPage():
     return "Hello, CECOM! API Main Function!"
  
-@flaskApp.route("/getPostList")
+@flaskApp.route("/getPostList", methods = ["POST"])
 def getPostList():
     errCode = 0
     errMessage = "RESULT OK"
