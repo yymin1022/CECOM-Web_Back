@@ -20,12 +20,11 @@ def getPostList():
     board_ref = db.collection(u'Board')
     posts = board_ref.stream()
 
-    listPosts = []
+    dicPosts = {}
 
     for post in posts:
-        listPosts.append([post.id, post.to_dict()])
+        dicPosts[post.id].append([post.to_dict()])
 
-    dictPosts = dict(["Result", listPosts])
     return dictPosts
  
 @flaskApp.route("/getPost")
