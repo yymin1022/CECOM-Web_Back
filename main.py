@@ -17,7 +17,14 @@ def main():
  
 @flaskApp.route("/getPostList")
 def getPostList():
-    return "CECOM Web API : Get Post List Function"
+    board_ref = db.collection(u'Board')
+    posts = board_ref.stream()
+
+    listPosts = []
+
+    for post in posts:
+        listPosts.append(f'{post.id} => {post.to_dict()}')
+    return listPosts
  
 @flaskApp.route("/getPost")
 def getPost():
