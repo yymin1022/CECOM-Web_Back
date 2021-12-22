@@ -23,7 +23,7 @@ def getPostList():
     listPosts = []
 
     for post in posts:
-        listPosts.append(dict([post.id, post.to_dict()]))
+        listPosts.append([post.id, post.to_dict())
 
     dictPosts = dict("Result", listPosts)
     return dictPosts
