@@ -21,7 +21,7 @@ def getPostList():
     errCode = 0
     errMessage = "RESULT OK"
 
-    board_ref = db.collection(u'Board')
+    board_ref = db.collection(u"Board")
     posts = board_ref.stream()
 
     dicPosts = {}
@@ -50,7 +50,7 @@ def getPost():
 
         return jsonify(dicResult)
 
-    board_ref = db.collection(u'Board')
+    board_ref = db.collection(u"Board")
     posts = board_ref.stream()
 
     dicPostData = {}
@@ -86,11 +86,11 @@ def writePost():
 
     postID = datetime.date.today().strftime("%y%m%d-%H%M%S")
 
-    doc_ref = db.collection(u'Board').document(u'postID')
+    doc_ref = db.collection(u"Board").document(postID)
     doc_ref.set({
-        u'author': inputPostAuthor,
-        u'content': inputPostContent,
-        u'title': inputPostTitle
+        u"author": inputPostAuthor,
+        u"content": inputPostContent,
+        u"title": inputPostTitle
     })
     
     dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
