@@ -12,7 +12,7 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
  
 @flaskApp.route("/")
-def main():
+def mainPage():
     return "Hello, CECOM! API Main Function!"
  
 @flaskApp.route("/getPostList")
