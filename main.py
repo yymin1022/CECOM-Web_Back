@@ -1,10 +1,10 @@
 from firebase_admin import credentials
 from firebase_admin import firestore
 from flask import Flask, jsonify, redirect, request
+from flask_cors import CORS, cross_origin
 
 import datetime
 import firebase_admin
-import flask_cors CORS, cross_origin
 
 flaskApp = Flask(__name__)
 CORS(flaskApp)
