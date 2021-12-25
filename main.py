@@ -4,8 +4,10 @@ from flask import Flask, jsonify, redirect, request
 
 import datetime
 import firebase_admin
+import flask_cors CORS, cross_origin
 
 flaskApp = Flask(__name__)
+CORS(flaskApp)
 
 cred = credentials.Certificate("/home/server/CECOM-Web_Back/cecom-web-e268a5fa9a73.json")
 firebase_admin.initialize_app(cred)
