@@ -31,7 +31,7 @@ def getPostList():
     for post in posts:
         dicPosts[post.id] = post.to_dict()
     
-    dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", [dicPosts])])
+    dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([dicPosts]))])
 
     return jsonify(dicResult)
  
@@ -61,7 +61,7 @@ def getPost():
         if inputPostID == post.id:
             dicPostData = post.to_dict()
     
-    dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dicPostData)])
+    dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict(dicPostData))])
 
     return jsonify(dicResult)
  
