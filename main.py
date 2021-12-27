@@ -101,7 +101,30 @@ def writePost():
 
 @flaskApp.route("/deletePost", methods = ["POST"])
 def deletePost():
-    return "Post Delete Function"
+    errCode = 0
+    errMessage = "RESULT OK"
+    inputPostID = ""
+
+    try:
+        inputData = request.get_json()
+        inputPostID = inputData["postID"]
+    except Exception as errContent:
+        errCode = 200
+        errMessage = repr(errContent)
+
+        dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
+
+        return jsonify(dicResult)
+
+    try:
+        doc_ref = db.collection(u"Board").document(inputPostID).delete()
+    except Exception as errContent:
+        errCode = 100
+        errMessage = repr(errContent)
+
+    dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
+
+    return jsonify(dicResult)
 
 @flaskApp.route("/updatePost", methods = ["POST"])
 def updatePost():
