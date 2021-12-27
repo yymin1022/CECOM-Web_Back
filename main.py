@@ -27,7 +27,7 @@ def getPostList():
     try:
         board_ref = db.collection(u"Board")
         posts = board_ref.stream()
-        
+
         for post in posts:
             dicPosts[post.id] = post.to_dict()
     except Exception as errContent:
@@ -64,7 +64,7 @@ def getPost():
             if inputPostID == post.id:
                 dicPostData = post.to_dict()
     except Exception as errContent:
-        errCode = 200
+        errCode = 100
         errMessage = repr(errContent)
 
     dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dicPostData)])
