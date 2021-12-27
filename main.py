@@ -82,7 +82,7 @@ def writePost():
         errCode = 200
         errMessage = repr(errContent)
 
-        dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("", "")]))])
+        dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
 
         return jsonify(dicResult)
 
@@ -122,17 +122,21 @@ def updatePost():
         errCode = 200
         errMessage = repr(errContent)
 
-        dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dict([("", "")]))])
+        dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
 
         return jsonify(dicResult)
 
-    doc_ref = db.collection(u"Board").document(inputPostID)
-    doc_ref.update({
-        u"author": inputPostAuthor,
-        u"content": inputPostContent,
-        u"title": inputPostTitle
-    })
-    
+    try:
+        doc_ref = db.collection(u"Board").document(inputPostID)
+        doc_ref.update({
+            u"author": inputPostAuthor,
+            u"content": inputPostContent,
+            u"title": inputPostTitle
+        })
+    except Exception as errContent:
+        errCode = 100
+        errMessage = repr(errContent)
+
     dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
 
     return jsonify(dicResult)
