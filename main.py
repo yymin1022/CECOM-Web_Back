@@ -20,23 +20,27 @@ def mainPage():
  
 @flaskApp.route("/getPostList", methods = ["POST"])
 def getPostList():
+    dicPosts = {}
     errCode = 0
     errMessage = "RESULT OK"
 
-    board_ref = db.collection(u"Board")
-    posts = board_ref.stream()
+    try:
+        board_ref = db.collection(u"Board")
+        posts = board_ref.stream()
+        
+        for post in posts:
+            dicPosts[post.id] = post.to_dict()
+    except Exception as errContent:
+        errCode = 200
+        errMessage = repr(errContent)
 
-    dicPosts = {}
-
-    for post in posts:
-        dicPosts[post.id] = post.to_dict()
-    
     dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dicPosts)])
 
     return jsonify(dicResult)
  
 @flaskApp.route("/getPost", methods = ["POST"])
 def getPost():
+    dicPostData = {}
     errCode = 0
     errMessage = "RESULT OK"
     inputPostID = ""
@@ -52,15 +56,17 @@ def getPost():
 
         return jsonify(dicResult)
 
-    board_ref = db.collection(u"Board")
-    posts = board_ref.stream()
+    try:
+        board_ref = db.collection(u"Board")
+        posts = board_ref.stream()
 
-    dicPostData = {}
+        for post in posts:
+            if inputPostID == post.id:
+                dicPostData = post.to_dict()
+    except Exception as errContent:
+        errCode = 200
+        errMessage = repr(errContent)
 
-    for post in posts:
-        if inputPostID == post.id:
-            dicPostData = post.to_dict()
-    
     dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)])), ("DATA", dicPostData)])
 
     return jsonify(dicResult)
@@ -88,12 +94,16 @@ def writePost():
 
     postID = datetime.datetime.now().strftime("%y%m%d-%H%M%S")
 
-    doc_ref = db.collection(u"Board").document(postID)
-    doc_ref.set({
-        u"author": inputPostAuthor,
-        u"content": inputPostContent,
-        u"title": inputPostTitle
-    })
+    try:
+        doc_ref = db.collection(u"Board").document(postID)
+        doc_ref.set({
+            u"author": inputPostAuthor,
+            u"content": inputPostContent,
+            u"title": inputPostTitle
+        })
+    except Exception as errContent:
+        errCode = 100
+        errMessage = repr(errContent)
     
     dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
 
