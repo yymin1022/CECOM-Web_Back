@@ -99,5 +99,13 @@ def writePost():
 
     return jsonify(dicResult)
 
+@flaskApp.route("/deletePost", methods = ["POST"])
+def deletePost():
+    return "Post Delete Function"
+
+@flaskApp.route("/updatePost", methods = ["POST"])
+def updatePost():
+    return "Post Update Function"
+
 if __name__ == "__main__":
     flaskApp.run(host="0.0.0.0", port=80)
