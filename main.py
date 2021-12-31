@@ -1,5 +1,6 @@
 from firebase_admin import credentials
 from firebase_admin import firestore
+from firebase_admin import storage
 from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS, cross_origin
 
@@ -10,9 +11,12 @@ flaskApp = Flask(__name__)
 CORS(flaskApp)
 
 cred = credentials.Certificate("/home/server/CECOM-Web_Back/cecom-web-e268a5fa9a73.json")
-firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred, {
+    'storageBucket': f"cecom-web.appspot.com"
+})
 
 db = firestore.client()
+bucket = storage.bucket()
  
 @flaskApp.route("/")
 def mainPage():
