@@ -197,12 +197,12 @@ def updatePost():
             u"title": inputPostTitle
         })
 
-        blob = bucket.blob("Posts/%s.md"%(postID))
+        blob = bucket.blob("Posts/%s.md"%(inputPostID))
         new_token = uuid4()
         metadata = {"firebaseStorageDownloadTokens": new_token}
         blob.metadata = metadata
 
-        blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/Posts/%s.md"%(postID))
+        blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/Posts/%s.md"%(inputPostID))
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
