@@ -62,12 +62,12 @@ def getPost():
         return jsonify(dicResult)
 
     try:
-        board_ref = db.collection(u"Board")
-        posts = board_ref.stream()
+        blob = bucket.blob("Posts/%s.md"%(postID))
+        new_token = uuid4()
+        metadata = {"firebaseStorageDownloadTokens": new_token}
+        blob.metadata = metadata
 
-        for post in posts:
-            if inputPostID == post.id:
-                dicPostData = post.to_dict()
+        blob.download_to_filename(filename="/home/server/CECOM-Web_Back/Posts/%s.md"%(postID))
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
