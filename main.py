@@ -197,6 +197,10 @@ def updatePost():
             u"title": inputPostTitle
         })
 
+        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(postID), "w")
+        postFile.write(inputPostContent)
+        postFile.close()
+
         blob = bucket.blob("Posts/%s.md"%(inputPostID))
         new_token = uuid4()
         metadata = {"firebaseStorageDownloadTokens": new_token}
