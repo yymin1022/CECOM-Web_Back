@@ -106,19 +106,22 @@ def writePost():
             u"content": inputPostContent,
             u"title": inputPostTitle
         })
+
+        postFile = open("{postID}.md","w+")
+        postFile.write(inputPostContent)
+        postFile.close()
+
+        blob = bucket.blob("Posts/{postID}.md")
+        new_token = uuid4()
+        metadata = {"firebaseStorageDownloadTokens": new_token}
+        blob.metadata = metadata
+
+        blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/{postID}.md")
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
     
     dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
-
-    blob = bucket.blob("Posts/test.md")
-    new_token = uuid4()
-    metadata = {"firebaseStorageDownloadTokens": new_token}
-    blob.metadata = metadata
-
-    blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/test.md")
-    print(blob.public_url)
 
     return jsonify(dicResult)
 
