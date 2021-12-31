@@ -107,7 +107,7 @@ def writePost():
             u"title": inputPostTitle
         })
 
-        postFile = open("/home/server/CECOM-Web_Back/Posts/{postID}.md","w+")
+        postFile = open("/home/server/CECOM-Web_Back/Posts/{postID}.md","w")
         postFile.write(inputPostContent)
         postFile.close()
 
