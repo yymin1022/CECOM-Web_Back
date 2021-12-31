@@ -77,7 +77,7 @@ def getPost():
         blob.download_to_filename(filename="/home/server/CECOM-Web_Back/Posts/%s.md"%(inputPostID))
 
         postContent = ""
-        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(inputPostID), "r")
+        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(inputPostID), "r", encoding="utf-8")
         for postFileLine in postFile.readlines():
             postContent = "%s\n%s"%(postContent, postFileLine)
             
@@ -121,7 +121,7 @@ def writePost():
             u"title": inputPostTitle
         })
 
-        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(postID), "w")
+        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(postID), "w", encoding="utf-8")
         postFile.write(inputPostContent)
         postFile.close()
 
@@ -200,7 +200,7 @@ def updatePost():
             u"title": inputPostTitle
         })
 
-        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(inputPostID), "w")
+        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(inputPostID), "w", encoding="utf-8")
         postFile.write(inputPostContent)
         postFile.close()
 
