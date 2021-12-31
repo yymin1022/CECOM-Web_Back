@@ -112,7 +112,7 @@ def writePost():
     
     dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
 
-    blob = bucket.blob("/home/server/CECOM-Web_Back/test.md")
+    blob = bucket.blob("Posts/test.md")
     new_token = uuid4()
     metadata = {"firebaseStorageDownloadTokens": new_token}
     blob.metadata = metadata
