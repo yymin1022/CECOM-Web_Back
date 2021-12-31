@@ -107,16 +107,16 @@ def writePost():
             u"title": inputPostTitle
         })
 
-        postFile = open("/home/server/CECOM-Web_Back/Posts/{postID}.md","w")
+        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(postID), "w")
         postFile.write(inputPostContent)
         postFile.close()
 
-        blob = bucket.blob("Posts/{postID}.md")
+        blob = bucket.blob("Posts/%s.md"%(postID))
         new_token = uuid4()
         metadata = {"firebaseStorageDownloadTokens": new_token}
         blob.metadata = metadata
 
-        blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/Posts/{postID}.md")
+        blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/Posts/%s.md"%(postID))
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
