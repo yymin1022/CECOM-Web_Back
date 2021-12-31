@@ -197,7 +197,7 @@ def updatePost():
             u"title": inputPostTitle
         })
 
-        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(postID), "w")
+        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(inputPostID), "w")
         postFile.write(inputPostContent)
         postFile.close()
 
