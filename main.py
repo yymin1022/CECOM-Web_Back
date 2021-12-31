@@ -78,7 +78,7 @@ def getPost():
 
         postContent = ""
         postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(inputPostID), "r")
-        for postFileLine in postFile.readlines:
+        for postFileLine in postFile.readlines():
             postContent = "%s\n%s"%(postContent, postFileLine)
             
         dicPostData["content"] = postContent
