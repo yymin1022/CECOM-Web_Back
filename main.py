@@ -158,6 +158,9 @@ def deletePost():
 
     try:
         doc_ref = db.collection(u"Board").document(inputPostID).delete()
+
+        blob = bucket.blob("Posts/%s.md"%(inputPostID))
+        blob.delete()
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
