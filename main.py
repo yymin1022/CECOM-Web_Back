@@ -3,6 +3,7 @@ from firebase_admin import firestore
 from firebase_admin import storage
 from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS, cross_origin
+from uuid import uuid4
 
 import datetime
 import firebase_admin
@@ -110,6 +111,14 @@ def writePost():
         errMessage = repr(errContent)
     
     dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
+
+    blob = bucket.blob("test.md")
+    new_token = uuid4()
+    metadata = {"firebaseStorageDownloadTokens": new_token}
+    blob.metadata = metadata
+
+    blob.upload_from_filename(filename="test.md")
+    print(blob.public_url)
 
     return jsonify(dicResult)
 
