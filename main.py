@@ -107,7 +107,7 @@ def writePost():
             u"title": inputPostTitle
         })
 
-        postFile = open("{postID}.md","w+")
+        postFile = open("./Posts/{postID}.md","w+")
         postFile.write(inputPostContent)
         postFile.close()
 
@@ -116,7 +116,7 @@ def writePost():
         metadata = {"firebaseStorageDownloadTokens": new_token}
         blob.metadata = metadata
 
-        blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/{postID}.md")
+        blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/Posts/{postID}.md")
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
