@@ -96,12 +96,14 @@ def writePost():
     errMessage = "RESULT OK"
     inputPostAuthor = ""
     inputPostContent = ""
+    inputPostPassword = ""
     inputPostTitle = ""
 
     try:
         inputData = request.get_json()
         inputPostAuthor = inputData["postAuthor"]
         inputPostContent = inputData["postContent"]
+        inputPostPassword = inputData["postPassword"]
         inputPostTitle = inputData["postTitle"]
     except Exception as errContent:
         errCode = 200
@@ -118,6 +120,7 @@ def writePost():
         doc_ref.set({
             u"author": inputPostAuthor,
             u"content": inputPostContent,
+            u"password": inputPostPassword,
             u"title": inputPostTitle
         })
 
