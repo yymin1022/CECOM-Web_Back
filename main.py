@@ -116,8 +116,24 @@ def writePost():
     postID = datetime.datetime.now().strftime("%y%m%d-%H%M%S")
 
     try:
-        uploadPostDB(inputPostAuthor, inputPostContent, postID, inputPostPassword, inputPostTitle)
-        uploadPostFile(postID)
+        doc_ref = db.collection(u"Board").document(postID)
+        doc_ref.set({
+            u"author": inputPostAuthor,
+            u"content": inputPostContent,
+            u"password": inputPostPassword,
+            u"title": inputPostTitle
+        })
+
+        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(postID), "w", encoding="utf-8")
+        postFile.write(inputPostContent)
+        postFile.close()
+
+        blob = bucket.blob("Posts/%s.md"%(postID))
+        new_token = uuid4()
+        metadata = {"firebaseStorageDownloadTokens": new_token}
+        blob.metadata = metadata
+
+        blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/Posts/%s.md"%(postID))
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
@@ -146,6 +162,7 @@ def deletePost():
         return jsonify(dicResult)
 
     try:
+<<<<<<< HEAD
         board_ref = db.collection(u"Board")
         posts = board_ref.stream()
 
@@ -156,6 +173,12 @@ def deletePost():
                 else:
                     errCode = 100
                     errMessage = "Password Incorrect"
+=======
+        doc_ref = db.collection(u"Board").document(inputPostID).delete()
+
+        blob = bucket.blob("Posts/%s.md"%(inputPostID))
+        blob.delete()
+>>>>>>> parent of 8180af4... Cleaned UP
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
@@ -171,7 +194,6 @@ def updatePost():
     inputPostAuthor = ""
     inputPostContent = ""
     inputPostID = ""
-    inputPostPassword = ""
     inputPostTitle = ""
 
     try:
@@ -179,7 +201,6 @@ def updatePost():
         inputPostAuthor = inputData["postAuthor"]
         inputPostContent = inputData["postContent"]
         inputPostID = inputData["postID"]
-        inputPostPassword = inputData["postPassword"]
         inputPostTitle = inputData["postTitle"]
     except Exception as errContent:
         errCode = 200
@@ -190,8 +211,23 @@ def updatePost():
         return jsonify(dicResult)
 
     try:
-        uploadPostDB(inputPostAuthor, inputPostContent, inputPostID, inputPostPassword, inputPostTitle)
-        uploadPostFile(inputPostID)
+        doc_ref = db.collection(u"Board").document(inputPostID)
+        doc_ref.update({
+            u"author": inputPostAuthor,
+            u"content": inputPostContent,
+            u"title": inputPostTitle
+        })
+
+        postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(inputPostID), "w", encoding="utf-8")
+        postFile.write(inputPostContent)
+        postFile.close()
+
+        blob = bucket.blob("Posts/%s.md"%(inputPostID))
+        new_token = uuid4()
+        metadata = {"firebaseStorageDownloadTokens": new_token}
+        blob.metadata = metadata
+
+        blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/Posts/%s.md"%(inputPostID))
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
@@ -199,33 +235,6 @@ def updatePost():
     dicResult = dict([("RESULT", dict([("RESULT_CODE", errCode), ("RESULT_MSG", errMessage)]))])
 
     return jsonify(dicResult)
-
-def deletePost(postID):
-    doc_ref = db.collection(u"Board").document(postID).delete()
-
-    blob = bucket.blob("Posts/%s.md"%(postID))
-    blob.delete()
-
-def uploadPostDB(postAuthor, postContent, postID, postPassword, postTitle):
-    doc_ref = db.collection(u"Board").document(postID)
-    doc_ref.update({
-        u"author": postAuthor,
-        u"content": postContent,
-        u"password": postPassword,
-        u"title": postTitle
-    })
-
-def uploadPostFile(postID):
-    postFile = open("/home/server/CECOM-Web_Back/Posts/%s.md"%(postID), "w", encoding="utf-8")
-    postFile.write(inputPostContent)
-    postFile.close()
-
-    blob = bucket.blob("Posts/%s.md"%(postID))
-    new_token = uuid4()
-    metadata = {"firebaseStorageDownloadTokens": new_token}
-    blob.metadata = metadata
-
-    blob.upload_from_filename(filename="/home/server/CECOM-Web_Back/Posts/%s.md"%(postID))
 
 if __name__ == "__main__":
     flaskApp.run(host="0.0.0.0", port=8080)
