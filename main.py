@@ -164,11 +164,17 @@ def deletePost():
     try:
         board_ref = db.collection(u"Board")
         posts = board_ref.stream()
-                    
-        doc_ref = db.collection(u"Board").document(inputPostID).delete()
 
-        blob = bucket.blob("Posts/%s.md"%(inputPostID))
-        blob.delete()
+        for post in posts:
+            if inputPostID == post.id:
+                if post.to_dict()["password"] == inputPostPassword:
+                    doc_ref = db.collection(u"Board").document(inputPostID).delete()
+
+                    blob = bucket.blob("Posts/%s.md"%(inputPostID))
+                    blob.delete()
+                else:
+                    errCode = 10
+                    errMessage = "Password Incorrect"
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
