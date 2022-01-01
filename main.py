@@ -131,10 +131,12 @@ def deletePost():
     errCode = 0
     errMessage = "RESULT OK"
     inputPostID = ""
+    inputPostPassword = ""
 
     try:
         inputData = request.get_json()
         inputPostID = inputData["postID"]
+        inputPostPassword = inputData["postPassword"]
     except Exception as errContent:
         errCode = 200
         errMessage = repr(errContent)
@@ -144,7 +146,16 @@ def deletePost():
         return jsonify(dicResult)
 
     try:
-        deletePost(inputPostID)
+        board_ref = db.collection(u"Board")
+        posts = board_ref.stream()
+
+        for post in posts:
+            if inputPostID == post.id:
+                if inputPostPassword == post.to_dict()["password"]:
+                    deletePost(inputPostID)
+                else:
+                    errCode = 100
+                    errMessage = "Password Incorrect"
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
