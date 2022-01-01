@@ -162,23 +162,13 @@ def deletePost():
         return jsonify(dicResult)
 
     try:
-<<<<<<< HEAD
         board_ref = db.collection(u"Board")
         posts = board_ref.stream()
-
-        for post in posts:
-            if inputPostID == post.id:
-                if inputPostPassword == post.to_dict()["password"]:
-                    deletePost(inputPostID)
-                else:
-                    errCode = 100
-                    errMessage = "Password Incorrect"
-=======
+                    
         doc_ref = db.collection(u"Board").document(inputPostID).delete()
 
         blob = bucket.blob("Posts/%s.md"%(inputPostID))
         blob.delete()
->>>>>>> parent of 8180af4... Cleaned UP
     except Exception as errContent:
         errCode = 100
         errMessage = repr(errContent)
